@@ -10,11 +10,17 @@ public class LoginResponseDto {
     private String alias;
     private String message;
     private String token;
+    private String refreshToken;
 
     @Builder
-    public LoginResponseDto(String alias, String message, String token) {
+    public LoginResponseDto(String alias, String message, String token, String refreshToken) {
         this.alias = alias;
         this.message = message;
         this.token = token;
+        this.refreshToken = refreshToken;
+    }
+
+    public String getRefreshToken() {
+        return this.refreshToken;
     }
 }

@@ -41,6 +41,18 @@ public class JwtProvider {
                 .compact();
     }
 
+    public String createRefreshToken(Long userPk, String userAlias) {
+        Claims claims = Jwts.claims().setSubject(userPk.toString());
+        Date now = new Date();
+        return Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .claim("alias", userAlias)
+                .setExpiration(new Date(now.getTime() + this.lifetime))
+                .signWith(SignatureAlgorithm.HS512, this.secret)
+                .compact();
+    }
+
     public Long getUserPk(String token) {
         return Long.parseLong((String) Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody().get("sub"));
     }

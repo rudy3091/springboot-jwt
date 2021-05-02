@@ -34,4 +34,8 @@ public class UserService {
         this.userRepository.save(user.toEntity());
         return user.toEntity();
     }
+
+    public User findByPassword(String password) {
+        return this.userRepository.findByPassword(password);
+    }
 }

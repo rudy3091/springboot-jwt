@@ -48,8 +48,8 @@ public class LoginController {
                     .build();
 
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Set-Cookie", "access_token=" + responseDto.getToken() + "; Path=/; Max-Age=60");
-            httpHeaders.add("Set-Cookie", "refresh_token=" + responseDto.getRefreshToken() + "; Path=/; Max-Age=120; httpOnly");
+            httpHeaders.add("Set-Cookie", "access_token=" + responseDto.getToken() + "; Path=/; Max-Age=600");
+            httpHeaders.add("Set-Cookie", "refresh_token=" + responseDto.getRefreshToken() + "; Path=/; Max-Age=1200; httpOnly");
 
             return new ResponseEntity<>(responseDto, httpHeaders, HttpStatus.OK);
         } catch (Exception e) {

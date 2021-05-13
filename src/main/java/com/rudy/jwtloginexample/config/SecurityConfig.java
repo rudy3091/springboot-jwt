@@ -1,5 +1,6 @@
 package com.rudy.jwtloginexample.config;
 
+import com.rudy.jwtloginexample.config.filters.CorsFilter;
 import com.rudy.jwtloginexample.config.filters.JwtAuthFilter;
 import com.rudy.jwtloginexample.config.jwt.JwtProvider;
 import com.rudy.jwtloginexample.domain.User.Role;
@@ -14,7 +15,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import javax.servlet.Filter;
 
 @AllArgsConstructor
 @Configuration
@@ -48,6 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/admin").hasAuthority(Role.ADMIN.name())
                 .antMatchers("/api/user").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/api/todos").hasAnyAuthority(Role.ADMIN.name(), Role.USER.name())
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtAuthFilter(this.jwtProvider),
